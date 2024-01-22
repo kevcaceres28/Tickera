@@ -1,13 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for
-import psycopg2
+import sqlite3
 
 app = Flask(__name__)
 
 
-DATABASE = 'postgresql://usuario:contraseña@localhost:5432/nombre_de_la_base_de_datos'
-
-def get_db():
-    db = psycopg2.connect(DATABASE)
+DATABASE = 'eventos.db'
+    db = sqlite3.connect(DATABASE)
     return db
 
 @app.route('/')
