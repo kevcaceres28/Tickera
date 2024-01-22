@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
+import logging
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
@@ -40,7 +41,4 @@ if __name__ == '__main__':
     app.debug = True
     app.run()
 
-import logging
-    logging.basicConfig(filename='app.log', level=logging.DEBUG)
-    app.debug = True
-    app.run()
+    
