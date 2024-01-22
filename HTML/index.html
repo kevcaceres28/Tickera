@@ -8,10 +8,16 @@
 <body>
     <h1>Lista de Eventos</h1>
     <ul>
-        {% for evento in eventos %}
-            <li>{{ evento[1] }} - {{ evento[2] }}</li>
-        {% endfor %}
-    </ul>
+       {% for evento in eventos %}
+        <li>
+            <strong>{{ evento[1] }}</strong> - {{ evento[2] | datetimeformat('%Y-%m-%d') }}<br>
+            Descripción: {{ evento[3] }}<br>
+            Lugar: {{ evento[4] }}<br>
+            Organizador: {{ evento[5] }}<br>
+            <a href="{{ url_for('detalle_evento', evento_id=evento[0]) }}">Detalles del Evento</a>
+        </li>
+    {% endfor %}
+</ul>
     <a href="{{ url_for('agregar_evento') }}">Agregar Evento</a>
 </body>
 </html>
