@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Evento</title>
+</head>
+<body>
+    <h1>Agregar Evento</h1>
+    <form action="{{ url_for('agregar_evento') }}" method="post">
+        <label for="titulo">Título del Evento:</label>
+        <input type="text" id="titulo" name="titulo" required>
+        <br>
+        <label for="fecha">Fecha del Evento:</label>
+        <input type="date" id="fecha" name="fecha" required>
+        <br>
+        <input type="submit" value="Agregar">
+    </form>
+    <br>
+    <a href="{{ url_for('index') }}">Volver a la Lista de Eventos</a>
+</body>
+</html>
