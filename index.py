@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
 
+logging.basicConfig(filename='app.log', level=logging.DEBUG)
+
 app = Flask(__name__)
 
-
 DATABASE = 'eventos.db'
+
 def get_db():
   db = sqlite3.connect(DATABASE)
   return db
@@ -35,5 +37,10 @@ def agregar_evento():
     return render_template('agregar_evento.html')
 
 if __name__ == '__main__':
+    app.debug = True
+    app.run()
+
+import logging
+    logging.basicConfig(filename='app.log', level=logging.DEBUG)
     app.debug = True
     app.run()
