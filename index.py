@@ -7,7 +7,7 @@ app = Flask(__name__)
 DATABASE = 'eventos.db'
 def get_db():
   db = sqlite3.connect(DATABASE)
-    return db
+  return db
 
 @app.route('/')
 def index():
@@ -26,7 +26,7 @@ def agregar_evento():
 
         db = get_db()
         cursor = db.cursor()
-        cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (%s, %s)', (titulo, fecha))
+        cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (?, ?)', (titulo, fecha))
         db.commit()
         db.close()
 
