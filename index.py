@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for 
+from app import app
 import sqlite3
 import logging
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
 app = Flask(__name__)
+
+from app import main
 
 DATABASE = 'eventos.db'
 
@@ -32,13 +35,12 @@ def agregar_evento():
         cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (?, ?)', (titulo, fecha))
         db.commit()
         db.close()
-
-        return redirect(url_for('index'))
-
-    return render_template('agregar_evento.html')
+     if evento:
+        return render_template('detalle_evento.html', evento=evento)
+     else:
+        return "Evento no encontrado", 404
 
 if __name__ == '__main__':
-    app.debug = True
-    app.run()
+    app.run(debug=True)
 
     
