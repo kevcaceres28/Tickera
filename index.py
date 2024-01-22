@@ -5,7 +5,8 @@ app = Flask(__name__)
 
 
 DATABASE = 'eventos.db'
-    db = sqlite3.connect(DATABASE)
+def get_db():
+  db = sqlite3.connect(DATABASE)
     return db
 
 @app.route('/')
