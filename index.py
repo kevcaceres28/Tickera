@@ -35,12 +35,10 @@ def agregar_evento():
         cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (?, ?)', (titulo, fecha))
         db.commit()
         db.close()
-     if evento:
-        return render_template('detalle_evento.html', evento=evento)
-     else:
-        return "Evento no encontrado", 404
+        if evento:
+            return render_template('detalle_evento.html', evento=evento)
+        else:
+            return "Evento no encontrado", 404
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-    
