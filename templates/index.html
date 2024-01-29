@@ -1,43 +1,43 @@
-import requests
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Aplicación</title>
+ 
+</head>
+<body>
+  <header>
+    <h1>Bienvenido a Mi Aplicación</h1>
+  </header>
 
-class PayU:
-    def __init__(self, merchant_id, api_login, api_key, test_mode=True):
-        self.base_url = 'https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi' if test_mode else 'https://api.payulatam.com/payments-api/4.0/service.cgi'
-        self.merchant_id = merchant_id
-        self.api_login = api_login
-        self.api_key = api_key
+  <main>
+    <section>
+      <h2>Eventos</h2>
+     
+    </section>
 
-    def create_payment(self, data):
-        headers = {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        }
-
+    <section>
+      <h2>Agregar Evento</h2>
       
-        data['merchant']['apiLogin'] = self.api_login
-        data['merchant']['apiKey'] = self.api_key
-        data['merchant']['merchantId'] = self.merchant_id
+      <form action="/agregar_evento" method="post">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
 
-      
-        response = requests.post(f'{self.base_url}/payments-api/4.0/service.cgi', json=data, headers=headers)
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" name="fecha" required>
 
-  
-        return response.json()
+        <button type="submit">Agregar Evento</button>
+      </form>
+    </section>
+  </main>
 
-payu = PayU(
-    merchant_id='tu_id_de_comercio',
-    api_login='tu_login_de_api',
-    api_key='tu_clave_privada',
-    test_mode=True  # Cambia a False en producción
-)
-payment_data = {
-    'referenceCode': 'codigo_de_referencia_unico',
-    'description': 'Pago por evento',
-    'value': 1000,
-    'currency': 'USD',  
-    'buyerEmail': 'correo@ejemplo.com',  # Ajusta el correo del comprador
-}
 
-response = payu.create_payment(payment_data)
-print(response)
+
+  <footer>
+    <p>© 2024 Mi Aplicación. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
 
