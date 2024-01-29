@@ -1,4 +1,3 @@
-import requests
 
 class PayU:
     def __init__(self, merchant_id, api_login, api_key, test_mode=True):
