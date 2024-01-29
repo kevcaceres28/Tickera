@@ -1,28 +1,21 @@
-from flask import Flask, render_template, request, redirect, url_for 
-from app import app
-import sqlite3
+from flask import Flask, render_template, request, jsonify
+from payu import PayU
 import logging
 
 logging.basicConfig(filename='app.log', level=logging.DEBUG)
 
 app = Flask(__name__)
 
-from app import main
-
-DATABASE = 'eventos.db'
-
-def get_db():
-  db = sqlite3.connect(DATABASE)
-  return db
+payu = PayU(
+    merchant_id='tu_id_de_comercio',
+    api_login='tu_login_de_api',
+    api_key='tu_clave_privada',
+    test_mode=True 
+)
 
 @app.route('/')
 def index():
-    db = get_db()
-    cursor = db.cursor()
-    cursor.execute('SELECT * FROM eventos')
-    eventos = cursor.fetchall()
-    db.close()
-    return render_template('index.html', eventos=eventos)
+    return render_template('index.html')
 
 @app.route('/agregar_evento', methods=['GET', 'POST'])
 def agregar_evento():
@@ -30,15 +23,29 @@ def agregar_evento():
         titulo = request.form['titulo']
         fecha = request.form['fecha']
 
-        db = get_db()
-        cursor = db.cursor()
-        cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (?, ?)', (titulo, fecha))
-        db.commit()
-        db.close()
-        if evento:
-            return render_template('detalle_evento.html', evento=evento)
-        else:
-            return "Evento no encontrado", 404
+        return render_template('exito.html')  
+
+@app.route('/procesar_pago', methods=['POST'])
+def procesar_pago():
+    try:
+        
+        evento_id = request.form['evento_id']
+        monto = 1000 
+
+        response = payu.payments.create({
+            'reference_code': 'codigo_de_referencia_unico',
+            'description': 'Pago por evento',
+            'value': monto,
+            'currency': 'USD',  
+            'buyer_email': 'correo@ejemplo.com',  
+            'test_mode=True'
+        })
+
+        
+        return jsonify({'redirect_url': response['payment_url']})
+    except Exception as e:
+        logging.error(f'Error al procesar el pago: {str(e)}')
+        return jsonify({'error': 'Error al procesar el pago'})
 
 if __name__ == '__main__':
     app.run(debug=True)
