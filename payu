@@ -34,7 +34,7 @@ payment_data = {
     'referenceCode': 'codigo_de_referencia_unico',
     'description': 'Pago por evento',
     'value': 1000,
-    'currency': 'USD',  # Ajusta la moneda según tus necesidades
+    'currency': 'USD',  
     'buyerEmail': 'correo@ejemplo.com',  # Ajusta el correo del comprador
 }
 
