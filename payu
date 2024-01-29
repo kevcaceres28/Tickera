@@ -1,1 +1,43 @@
-index.html
+import requests
+
+class PayU:
+    def __init__(self, merchant_id, api_login, api_key, test_mode=True):
+        self.base_url = 'https://sandbox.api.payulatam.com/payments-api/4.0/service.cgi' if test_mode else 'https://api.payulatam.com/payments-api/4.0/service.cgi'
+        self.merchant_id = merchant_id
+        self.api_login = api_login
+        self.api_key = api_key
+
+    def create_payment(self, data):
+        headers = {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+
+      
+        data['merchant']['apiLogin'] = self.api_login
+        data['merchant']['apiKey'] = self.api_key
+        data['merchant']['merchantId'] = self.merchant_id
+
+      
+        response = requests.post(f'{self.base_url}/payments-api/4.0/service.cgi', json=data, headers=headers)
+
+  
+        return response.json()
+
+payu = PayU(
+    merchant_id='tu_id_de_comercio',
+    api_login='tu_login_de_api',
+    api_key='tu_clave_privada',
+    test_mode=True  # Cambia a False en producción
+)
+payment_data = {
+    'referenceCode': 'codigo_de_referencia_unico',
+    'description': 'Pago por evento',
+    'value': 1000,
+    'currency': 'USD',  # Ajusta la moneda según tus necesidades
+    'buyerEmail': 'correo@ejemplo.com',  # Ajusta el correo del comprador
+}
+
+response = payu.create_payment(payment_data)
+print(response)
+
