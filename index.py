@@ -35,4 +35,5 @@ def agregar_evento():
         cursor.execute('INSERT INTO eventos (titulo, fecha) VALUES (?, ?)', (titulo, fecha))
         db.commit()
         db.close()
+      return 'Evento agregado correctamente'
         if evento:
